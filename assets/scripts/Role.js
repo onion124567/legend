@@ -25,6 +25,10 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
+        hpAnimateLabel:{
+          default:null,
+          type:cc.Label
+        },
          statuslist:[],//状态数组
     },
 
@@ -39,9 +43,14 @@ cc.Class({
         if(hp<0){
             hp=0;
         }
+        // this.hpAnimate();
         this.roleBean.setRoleHp(hp);
         this.hpLabel.string=this.roleBean.getRoleHp();
         return hp>0;
+    },
+    hpAnimate(){
+        let animate=cc.sequence(cc.moveBy(2,  -50, 50),2);
+        this.hpAnimateLabel.runAction(animate);
     },
     //找到需要触发的状态节点，并触发
     roundBegin(){

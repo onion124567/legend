@@ -6,6 +6,15 @@ import Director from "./Director";
 export var RoadType = {
     ENEMY: 1,//野怪
     RECOVER: 2,//恢复
+    SHOP:3,
+
+}
+export function createRoadBean(roadtype,hpRecover,cardList) {
+    return {
+        roadtype:roadtype,
+        hpRecover:hpRecover,
+        cardList:cardList
+    }
 }
 cc.Class({
     extends: cc.Component,
@@ -56,8 +65,8 @@ cc.Class({
         this.checkFunction = fun;
     },
 
-    getCardBean(){
-      return this.cardBean;
+    getRoadBean(){
+      return this.roadBean;
     },
 
     bindRoadBean(type,roadBean){
