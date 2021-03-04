@@ -1,6 +1,8 @@
 /**
  * 道路卡片
  */
+import Director from "./Director";
+
 export var RoadType = {
     ENEMY: 1,//野怪
     RECOVER: 2,//恢复
@@ -99,8 +101,11 @@ cc.Class({
         console.log("onion" + 'Press a key');
        if(this.type==RoadType.RECOVER){
            //发出增长hp的事件
+           Director.hostHero.hp+=10;
        }else {
-           //
+           //从卡面取得敌人信息
+           Director.currentEnemy=this.roadBean;
+           cc.director.loadScene('game');
        }
     },
 

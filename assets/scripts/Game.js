@@ -1,5 +1,6 @@
 import CardBean from "./beans/CardBean";
 import RoleBean from "./beans/RoleBean";
+import Director from "./Director";
 
 let PokerUtil = require("PokerUtil");
 let AIHelper = require("AIHelper");
@@ -136,6 +137,8 @@ cc.Class({
             if(!live){
                 self.roundSide=-1;
                 self.appendLog("敌人死亡 游戏胜利");
+                self.toMapScene();
+
             }
         }
 
@@ -241,9 +244,18 @@ cc.Class({
     /**
      * 切换至地图
      */
-    outerClick: function () {
+    toMapScene: function () {
+        this.saveHeroData();
+        Director.currentEnemy=null;
         cc.director.loadScene('outermap');
 
+    },
+    saveHeroData:function () {
+        if(self.heroRole.roleHp<=Director.hostHero.fullhp){
+            Director.hostHero.hp=self.heroRole.roleHp;
+        }else {
+            Director.hostHero.hp=Director.hostHero.fullhp;
+        }
     },
     appendLog: function (string) {
         self.playLog = self.playLog + "\n" + string;
