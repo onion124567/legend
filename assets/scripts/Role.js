@@ -9,7 +9,7 @@ import {StatusType} from "./Game";
 cc.Class({
     extends: cc.Component,
     properties: {
-        roleBean:new RoleBean(),
+        roleBean:new RoleBean(0),
         level:-1,
         cardlist:[],//总手牌
         // currentcardArrays:[],//当前手牌
@@ -28,6 +28,10 @@ cc.Class({
         hpAnimateLabel:{
           default:null,
           type:cc.Label
+        },
+        targetStamp:{
+            default:null,
+            tyoe:cc.Sprite
         },
          statuslist:[],//状态数组
     },
@@ -69,6 +73,14 @@ cc.Class({
         this.hpLabel.string=role.getRoleHp()+"";
     },
 
+    //被标记
+    targetSign(){
+
+    },
+    //取消标记
+    targetCancel(){
+
+    },
     //返回效果
     onDrawCard(cardBean){
     },

@@ -1,10 +1,13 @@
 
 //战斗中的宝宝
+import PokemonBean from "./beans/PokemonBean";
+
 cc.Class({
 
     extends: cc.Component,
     properties: {
         id:"181",
+        pokenBean:new PokemonBean(),
         level:-1,
         round:-1,//剩余回合数
         sprite: {//基础贴图
@@ -16,8 +19,7 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
-        //技能类型
-        actionType:0,//1给主角恢复 2充当某种类型牌  3加护甲 4抽牌  5造成伤害  6加buff 7再进行一回合
+
         //技能可用
         actionEable:1,
 
@@ -28,7 +30,8 @@ cc.Class({
 
     },
 
-    underattack(){//被攻击，触发自身状态栏，更改自身生命值，状态值
+    underattack(value){//被攻击，触发自身状态栏，更改自身生命值，状态值
+        this.hp=this.hp-value;
 
     },
 
