@@ -52,6 +52,9 @@ cc.Class({
         this.hpLabel.string=this.roleBean.getRoleHp();
         return hp>0;
     },
+    isAlive(){
+        return hp>0;
+    },
     hpAnimate(){
         let animate=cc.sequence(cc.moveBy(2,  -50, 50),2);
         this.hpAnimateLabel.runAction(animate);

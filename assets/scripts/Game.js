@@ -128,10 +128,12 @@ cc.Class({
             self.sendFocusShow(cardBean);
             let value = cardBean.sendEffect();//造成的伤害值
             self.appendLog("对方受到伤害"+value);
-            //攻击时的伤害值加强
+            //攻击时的伤害值加强或减弱
             value = self.heroRole.attack(value);
+            //
+            this.sideUnderAttack(self.enemyRole,null,null,value);
             //状态调整或附加
-            let live=self.enemyRole.underattack(value);
+            let live=self.enemyRole.isAlive();
             self.currentCard.node.destroy();
             self.currentCard = null;
             if(!live){
@@ -141,6 +143,13 @@ cc.Class({
 
             }
         }
+
+    },
+    /**先判定目标
+     * 根据状态承受伤害
+     * 宝宝死亡时销毁节点
+     */
+    sideUnderAttack:function(role,pokemonleft,pokenmonright,value){
 
     },
 
