@@ -5,7 +5,12 @@ cc._RF.push(module, 'b0d4b/RYn5GLrl62TzzdTTI', 'RoadCard');
 "use strict";
 
 exports.__esModule = true;
+exports.createRoadBean = createRoadBean;
 exports.RoadType = void 0;
+
+var _Director = _interopRequireDefault(require("./Director"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * 道路卡片
@@ -13,10 +18,20 @@ exports.RoadType = void 0;
 var RoadType = {
   ENEMY: 1,
   //野怪
-  RECOVER: 2 //恢复
-
+  RECOVER: 2,
+  //恢复
+  SHOP: 3
 };
 exports.RoadType = RoadType;
+
+function createRoadBean(roadtype, hpRecover, cardList) {
+  return {
+    roadtype: roadtype,
+    hpRecover: hpRecover,
+    cardList: cardList
+  };
+}
+
 cc.Class({
   "extends": cc.Component,
   properties: {
@@ -56,19 +71,15 @@ cc.Class({
   bindCardFunction: function bindCardFunction(fun) {
     this.checkFunction = fun;
   },
-  getCardBean: function getCardBean() {
-    return this.cardBean;
+  getRoadBean: function getRoadBean() {
+    return this.roadBean;
   },
   bindRoadBean: function bindRoadBean(type, roadBean) {
     this.roadBean = roadBean;
     this.type = type;
-  },
-  bindCardBean: function bindCardBean(cardBean) {
-    this.cardBean = cardBean;
     this.titleLabel.string = this.cardBean.title;
     this.levelLable.string = this.cardBean.level;
     this.descLabel.string = this.cardBean.desc;
-    this.titleLabel.string = this.cardBean.title;
   },
   // update: function (dt) {
   // },
@@ -95,16 +106,14 @@ cc.Class({
   },
   onSelect: function onSelect(event) {
     console.log("onion" + 'Press a key');
-    event.stopPropagation();
 
-    if (this.isCheck) {
-      this.isCheck = false;
-      this.node.y = this.node.y - 50;
-      this.checkFunction && this.checkFunction(this, false);
+    if (this.type == RoadType.RECOVER) {
+      //发出增长hp的事件
+      _Director["default"].hostHero.hp += 10;
     } else {
-      this.isCheck = true;
-      this.node.y = this.node.y + 50;
-      this.checkFunction && this.checkFunction(this, true);
+      //从卡面取得敌人信息
+      _Director["default"].currentEnemy = this.roadBean;
+      cc.director.loadScene('game');
     }
   },
   onCancel: function onCancel() {

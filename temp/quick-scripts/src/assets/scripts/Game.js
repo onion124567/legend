@@ -5,11 +5,13 @@ cc._RF.push(module, '4e12fLSQu1L+KV6QmxDiavU', 'Game');
 "use strict";
 
 exports.__esModule = true;
-exports.StatusType = void 0;
+exports.gameHero = exports.StatusType = void 0;
 
 var _CardBean = _interopRequireDefault(require("./beans/CardBean"));
 
 var _RoleBean = _interopRequireDefault(require("./beans/RoleBean"));
+
+var _Director = _interopRequireDefault(require("./Director"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -38,6 +40,8 @@ var StatusType = {
 
 };
 exports.StatusType = StatusType;
+var gameHero = null;
+exports.gameHero = gameHero;
 var totalCardNum = 5;
 /**
  * 战斗界面 demo版本，做一个抽卡，每张卡能打3点血，敌方有20点血的demo
@@ -148,20 +152,29 @@ cc.Class({
       self.sendFocusShow(cardBean);
       var value = cardBean.sendEffect(); //造成的伤害值
 
-      self.appendLog("对方受到伤害" + value); //攻击时的伤害值加强
+      self.appendLog("对方受到伤害" + value); //攻击时的伤害值加强或减弱
 
-      value = self.heroRole.attack(value); //状态调整或附加
+      value = self.heroRole.attack(value); //
 
-      var live = self.enemyRole.underattack(value);
+      this.sideUnderAttack(self.enemyRole, null, null, value); //状态调整或附加
+
+      var live = self.enemyRole.isAlive();
       self.currentCard.node.destroy();
       self.currentCard = null;
 
       if (!live) {
         self.roundSide = -1;
         self.appendLog("敌人死亡 游戏胜利");
+        self.toMapScene();
       }
     }
   },
+
+  /**先判定目标
+   * 根据状态承受伤害
+   * 宝宝死亡时销毁节点
+   */
+  sideUnderAttack: function sideUnderAttack(role, pokemonleft, pokenmonright, value) {},
   sendFocusShow: function sendFocusShow(cardBean) {
     self.appendLog("出牌" + cardBean.title);
   },
@@ -272,8 +285,17 @@ cc.Class({
   /**
    * 切换至地图
    */
-  outerClick: function outerClick() {
+  toMapScene: function toMapScene() {
+    this.saveHeroData();
+    _Director["default"].currentEnemy = null;
     cc.director.loadScene('outermap');
+  },
+  saveHeroData: function saveHeroData() {
+    if (self.heroRole.roleHp <= _Director["default"].hostHero.fullhp) {
+      _Director["default"].hostHero.hp = self.heroRole.roleHp;
+    } else {
+      _Director["default"].hostHero.hp = _Director["default"].hostHero.fullhp;
+    }
   },
   appendLog: function appendLog(string) {
     self.playLog = self.playLog + "\n" + string;

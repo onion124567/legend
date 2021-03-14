@@ -1,20 +1,10 @@
-export var CardType = {
-    ATTACK: 0,//攻击牌
-    ACTION: 1,//技能牌
-    SOURCE: 2,//资源牌
-    CALL:3,//召唤牌
-    EQUI:4,//装备牌
+import {CardType} from "../ConstantConfig";
 
-}
 export default class CardBean {
     constructor() {
         this.id = "181";
         this.level = -1;
-        this.sprite = {//基础贴图
-            default: null,
-            type: cc.SpriteFrame,
-        };
-        this.cost = 20;//费用
+        this.picurl ="";//贴图
         this.type = CardType.ATTACK;//类型
         this.desc = "";//说明
         this.title="攻击";//卡牌名称

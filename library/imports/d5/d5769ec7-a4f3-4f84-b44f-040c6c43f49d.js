@@ -20,7 +20,7 @@ var StatusBean = /*#__PURE__*/function () {
     };
     this.round = -1; //费用
 
-    this.type = _Game.StatusType.ROUNDBEGIN; //状态类型 1回合开始结算 2出牌是结算 3弃牌时结算 4回合结束时结算 5敌方回合结算
+    this.type = _Game.StatusType.ROUNDBEGIN;
   }
   /**
    * 结算状态

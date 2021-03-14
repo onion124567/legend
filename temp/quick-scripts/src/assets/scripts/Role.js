@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 cc.Class({
   "extends": cc.Component,
   properties: {
-    roleBean: new _RoleBean["default"](),
+    roleBean: new _RoleBean["default"](0),
     level: -1,
     cardlist: [],
     //总手牌
@@ -36,6 +36,14 @@ cc.Class({
       "default": null,
       type: cc.Label
     },
+    hpAnimateLabel: {
+      "default": null,
+      type: cc.Label
+    },
+    targetStamp: {
+      "default": null,
+      tyoe: cc.Sprite
+    },
     statuslist: [] //状态数组
 
   },
@@ -51,11 +59,19 @@ cc.Class({
 
     if (hp < 0) {
       hp = 0;
-    }
+    } // this.hpAnimate();
+
 
     this.roleBean.setRoleHp(hp);
     this.hpLabel.string = this.roleBean.getRoleHp();
     return hp > 0;
+  },
+  isAlive: function isAlive() {
+    return hp > 0;
+  },
+  hpAnimate: function hpAnimate() {
+    var animate = cc.sequence(cc.moveBy(2, -50, 50), 2);
+    this.hpAnimateLabel.runAction(animate);
   },
   //找到需要触发的状态节点，并触发
   roundBegin: function roundBegin() {
@@ -70,6 +86,10 @@ cc.Class({
     this.roleBean = role;
     this.hpLabel.string = role.getRoleHp() + "";
   },
+  //被标记
+  targetSign: function targetSign() {},
+  //取消标记
+  targetCancel: function targetCancel() {},
   //返回效果
   onDrawCard: function onDrawCard(cardBean) {}
 });
