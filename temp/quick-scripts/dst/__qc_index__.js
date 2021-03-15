@@ -26,6 +26,7 @@ require('./assets/scripts/PokerUtil');
 require('./assets/scripts/RoadCard');
 require('./assets/scripts/RoadMapPage');
 require('./assets/scripts/Role');
+require('./assets/scripts/TestTs');
 require('./assets/scripts/beans/CardBean');
 require('./assets/scripts/beans/PokemonBean');
 require('./assets/scripts/beans/RoleBean');
